@@ -6,7 +6,7 @@ const rendered = await Promise.all(items.map(async (i) => ({ i, Content: (await 
 ---
 <Base title="Global Impact">
   <h1>Global Impact</h1>
-  <p class="tagline">Moldova, the UAE, the UK, the US, France and Ukraine: using mathematics and AI to open doors for others.</p>
+  <p class="tagline">Moldova, China, the UAE, the UK, the US, France and Ukraine: using mathematics and AI to open doors for others.</p>
   {rendered.map(({ i, Content }) => (
     <article class="card">
       <p class="meta">{i.data.place} · {i.data.period}</p>
