@@ -4,6 +4,6 @@ dist/
 .DS_Store
 # Raw source material (contains personal contact details) - not published
 Profile*.pdf
-Presentations/
+/Presentations/
 Catalin_Botezat_photo.jpg
 Catalin_Botezat_CV*.pdf
