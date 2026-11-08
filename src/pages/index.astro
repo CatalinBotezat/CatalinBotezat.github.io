@@ -1,0 +1,32 @@
+---
+import Base from '../layouts/Base.astro';
+const roles = [
+  ['Feb 2026 – present', 'Research Assistant, Quantum Machine Learning & Quantum Algorithms', 'eBRAIN Lab, NYU Abu Dhabi'],
+  ['Jan – Mar 2026', 'Mathematics Expert (LLM evaluation)', 'Mercor'],
+  ['Aug 2023 – May 2027', 'B.S. Mathematics and Computer Science', 'New York University (Abu Dhabi, Paris)'],
+  ['May – Sep 2025', 'Founder & Administrator', 'AcademicHub.md, Chișinău'],
+  ['Jun – Aug 2025', 'Machine Learning Researcher', 'NYU Abu Dhabi'],
+  ['Sep 2021 – Aug 2023', 'High School Diploma', 'Tonbridge School, UK'],
+];
+---
+<Base title="Home">
+  <div class="hero">
+    <img src="/img/catalin.jpg" alt="Portrait of Cătălin Botezat" />
+    <div>
+      <h1>Cătălin Botezat</h1>
+      <p class="tagline">Mathematics &amp; Computer Science · AI Research · Mission-driven innovation</p>
+      <p>I'm an undergraduate at New York University, studying mathematics and computer science, and a research assistant at the eBRAIN Lab in Abu Dhabi. My journey began in competitive mathematics, representing Moldova at the International Mathematical Olympiad, and grew into a focus on machine learning that has real-world impact.</p>
+      <p>I work at the intersection of mathematical insight and practical engineering, from quantum machine learning and knot theory to AI for social good.</p>
+      <p class="links">
+        <a href="https://www.linkedin.com/in/catalin-botezat/">LinkedIn</a>
+        <a href="https://github.com/CatalinMoldova">GitHub</a>
+        <a href="mailto:catalinbotezat04@gmail.com">Email</a>
+      </p>
+    </div>
+  </div>
+  <h2>Welcome</h2>
+  <ul class="timeline">
+    {roles.map(([when, what, where]) => <li><span class="when">{when}</span><span><strong>{what}</strong><br /><span class="meta">{where}</span></span></li>)}
+  </ul>
+  <p><a href="/cv">Full CV →</a></p>
+</Base>

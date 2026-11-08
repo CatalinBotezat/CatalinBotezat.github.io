@@ -1,0 +1,17 @@
+---
+import Base from '../layouts/Base.astro';
+import { getCollection, render } from 'astro:content';
+const items = (await getCollection('competitions')).sort((a, b) => a.data.order - b.data.order);
+const rendered = await Promise.all(items.map(async (i) => ({ i, Content: (await render(i)).Content })));
+---
+<Base title="Competitions">
+  <h1>Competitions</h1>
+  <p class="tagline">Where the mathematics started.</p>
+  {rendered.map(({ i, Content }) => (
+    <article class="card">
+      <p class="meta">{i.data.result && <span class="tag">{i.data.result}</span>}{i.data.year}</p>
+      <h3>{i.data.title}</h3>
+      <Content />
+    </article>
+  ))}
+</Base>

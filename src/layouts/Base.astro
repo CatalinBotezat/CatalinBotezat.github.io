@@ -1,0 +1,32 @@
+---
+import '../styles/global.css';
+const { title, description = 'Cătălin Botezat — mathematics, machine learning and research with impact.' } = Astro.props;
+const path = Astro.url.pathname.replace(/\/$/, '') || '/';
+const nav = [
+  ['/', 'Home'], ['/research', 'Research'], ['/competitions', 'Competitions'],
+  ['/presentations', 'Presentations'], ['/global-impact', 'Global Impact'],
+  ['/cv', 'CV'], ['/interests', 'Personal Interests'],
+];
+const full = title === 'Home' ? 'Cătălin Botezat' : `${title} · Cătălin Botezat`;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <title>{full}</title>
+  </head>
+  <body>
+    <header class="site">
+      <div class="wrap">
+        <a class="brand" href="/">Cătălin Botezat</a>
+        <nav aria-label="Main">
+          {nav.map(([href, label]) => <a href={href} aria-current={path === href ? 'page' : undefined}>{label}</a>)}
+        </nav>
+      </div>
+    </header>
+    <main><div class="wrap"><slot /></div></main>
+    <footer><div class="wrap">© {new Date().getFullYear()} Cătălin Botezat · Abu Dhabi, UAE</div></footer>
+  </body>
+</html>

@@ -1,0 +1,21 @@
+---
+import Base from '../layouts/Base.astro';
+import { getCollection, render } from 'astro:content';
+const fmt = (d: Date, o: Intl.DateTimeFormatOptions = { year: "numeric", month: "long" }) => d.toLocaleDateString("en-GB", { ...o, timeZone: "UTC" });
+const items = (await getCollection('research')).sort((a, b) => +b.data.date - +a.data.date);
+const rendered = await Promise.all(items.map(async (i) => ({ i, Content: (await render(i)).Content })));
+---
+<Base title="Research">
+  <h1>Research</h1>
+  <p class="tagline">Quantum machine learning, mathematics of knots, and AI for real-world systems.</p>
+  {rendered.map(({ i, Content }) => (
+    <article class="card">
+      <p class="meta">{i.data.status && <span class="tag">{i.data.status}</span>}{i.data.venue} · {fmt(i.data.date)}</p>
+      <h3>{i.data.title}</h3>
+      <p class="meta">{i.data.authors}</p>
+      <p>{i.data.summary}</p>
+      <Content />
+      {i.data.links.length > 0 && <p class="links">{i.data.links.map((l) => <a href={l.url}>{l.label}</a>)}</p>}
+    </article>
+  ))}
+</Base>

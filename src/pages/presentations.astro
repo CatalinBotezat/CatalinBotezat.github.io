@@ -1,0 +1,28 @@
+---
+import Base from '../layouts/Base.astro';
+import { getCollection, render } from 'astro:content';
+const fmt = (d: Date, o: Intl.DateTimeFormatOptions = { year: "numeric", month: "long" }) => d.toLocaleDateString("en-GB", { ...o, timeZone: "UTC" });
+const items = (await getCollection('presentations')).sort((a, b) => +b.data.date - +a.data.date);
+const rendered = await Promise.all(items.map(async (i) => ({ i, Content: (await render(i)).Content })));
+---
+<Base title="Presentations">
+  <h1>Presentations</h1>
+  <p class="tagline">Talks, posters and roundtables, with slides and recordings.</p>
+  {rendered.map(({ i, Content }) => (
+    <article class={`card ${i.data.thumb ? 'with-thumb' : ''}`}>
+      {i.data.thumb && <a href={i.data.slides}><img src={i.data.thumb} alt={`Title slide: ${i.data.title}`} loading="lazy" /></a>}
+      <div>
+        <p class="meta"><span class="tag">{i.data.kind}</span>{i.data.event}{i.data.location ? `, ${i.data.location}` : ''} · {fmt(i.data.date, { year: 'numeric', month: 'long', day: 'numeric' })}</p>
+        <h3>{i.data.title}</h3>
+        {i.data.subtitle && <p class="meta">{i.data.subtitle}</p>}
+        <Content />
+        {i.data.slides && <p class="links"><a href={i.data.slides}>Slides ({i.data.slides.split('.').pop()?.toUpperCase()})</a></p>}
+        {i.data.youtube && (
+          <iframe class="video" loading="lazy" title={i.data.title}
+            src={`https://www.youtube-nocookie.com/embed/${i.data.youtube}${i.data.youtubeStart ? `?start=${i.data.youtubeStart}` : ''}`}
+            allow="accelerometer; encrypted-media; picture-in-picture" allowfullscreen></iframe>
+        )}
+      </div>
+    </article>
+  ))}
+</Base>

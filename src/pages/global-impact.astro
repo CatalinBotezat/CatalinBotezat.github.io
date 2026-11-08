@@ -1,0 +1,17 @@
+---
+import Base from '../layouts/Base.astro';
+import { getCollection, render } from 'astro:content';
+const items = (await getCollection('impact')).sort((a, b) => a.data.order - b.data.order);
+const rendered = await Promise.all(items.map(async (i) => ({ i, Content: (await render(i)).Content })));
+---
+<Base title="Global Impact">
+  <h1>Global Impact</h1>
+  <p class="tagline">Moldova, the UAE, the UK, the US, France and Ukraine: using mathematics and AI to open doors for others.</p>
+  {rendered.map(({ i, Content }) => (
+    <article class="card">
+      <p class="meta">{i.data.place} · {i.data.period}</p>
+      <h3>{i.data.title}</h3>
+      <Content />
+    </article>
+  ))}
+</Base>
